@@ -1,13 +1,13 @@
 {
-  "name": "angular-calendar-app",
+  "name": "journee",
   "version": "0.0.1",
-  "author": "Jekin Gohel <jekin1991@gmail.com>",
+  "author": "Alan",
   "repository": {
     "type": "git",
-    "url": "https://github.com/jekingohel/angular-calendar-app.git"
+    "url": "https://github.com/alanheverton/journee.git"
   },
-  "homepage": "https://github.com/jekingohel/angular-calendar-app",
-  "description": "A simple calendar app built with Angular, Angular Material, and Angular CDK for managing appointments.",
+  "homepage": "https://github.com/alanheverton/journee.git",
+  "description": "Um calendário com Angular Material",
   "scripts": {
     "ng": "ng",
     "start": "ng serve",
