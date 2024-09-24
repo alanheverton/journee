@@ -1,5 +1,8 @@
 import { Component, Inject } from '@angular/core';
 import { MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dialog';
+import { MAT_DATE_LOCALE, MAT_DATE_FORMATS } from '@angular/material/core';
+import { MatNativeDateModule } from '@angular/material/core';
+
 import {
   AbstractControl,
   FormBuilder,
@@ -16,10 +19,27 @@ import { MatButtonModule } from '@angular/material/button';
 import { MatDatepickerModule } from '@angular/material/datepicker';
 import { CommonModule } from '@angular/common';
 
+// Define custom date formats
+export const MY_DATE_FORMATS = {
+  parse: {
+    dateInput: 'DD/MM/YYYY',
+  },
+  display: {
+    dateInput: 'DD/MM/YYYY',
+    monthYearLabel: 'MMM YYYY',
+    dateA11yLabel: 'DD/MM/YYYY',
+    monthYearA11yLabel: 'MMMM YYYY',
+  },
+};
+
 @Component({
   selector: 'app-appointment-dialog',
   templateUrl: './appointment-dialog.component.html',
   styleUrls: ['./appointment-dialog.component.scss'],
+  providers: [
+    { provide: MAT_DATE_LOCALE, useValue: 'pt-BR' }, // Set locale
+    { provide: MAT_DATE_FORMATS, useValue: MY_DATE_FORMATS }, // Apply custom date formats
+  ],
   standalone: true,
   imports: [
     CommonModule,
@@ -28,6 +48,7 @@ import { CommonModule } from '@angular/common';
     MatInputModule,
     MatButtonModule,
     MatDatepickerModule,
+    MatNativeDateModule,
     ReactiveFormsModule,
   ],
 })
@@ -51,7 +72,7 @@ export class AppointmentDialogComponent {
         title: [this.data.title || '', Validators.required],
         date: [this.data.date, Validators.required],
         startTime: [this.data.startTime || '', Validators.required],
-        endTime: [this.data.startTime || '', Validators.required],
+        endTime: [this.data.endTime || '', Validators.required],
       },
       { validators: this.timeRangeValidator }
     );

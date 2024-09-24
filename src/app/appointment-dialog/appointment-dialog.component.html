@@ -1,54 +1,73 @@
 <div class="dialog-content">
-  <h5 mat-dialog-title *ngIf="!data.uuid">Add Appointment</h5>
-  <h5 mat-dialog-title *ngIf="data.uuid">Edit Appointment</h5>
+  <!-- Título do diálogo: Adicionar ou Editar Compromisso -->
+  <h5 mat-dialog-title *ngIf="!data.uuid">Adicionar Compromisso</h5>
+  <h5 mat-dialog-title *ngIf="data.uuid">Editar Compromisso</h5>
+
+  <!-- Formulário de compromisso -->
   <div [formGroup]="appointmentForm">
     <div mat-dialog-content>
+      <!-- Campo para o nome do compromisso -->
       <mat-form-field class="form-field">
-        <mat-label>Title</mat-label>
+        <mat-label>Nome</mat-label>
         <input formControlName="title" matInput />
       </mat-form-field>
+
+      <!-- Campo para a data do compromisso -->
       <mat-form-field class="form-field">
-        <mat-label>Date</mat-label>
+        <mat-label>Data</mat-label>
         <input matInput [matDatepicker]="picker" formControlName="date" />
         <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
         <mat-datepicker #picker></mat-datepicker>
       </mat-form-field>
+
+      <!-- Campo para o horário de início -->
       <mat-form-field class="form-field">
-        <mat-label>Start Time</mat-label>
+        <mat-label>Horário de Início</mat-label>
         <input matInput formControlName="startTime" type="time" />
       </mat-form-field>
+
+      <!-- Campo para o horário de finalização -->
       <mat-form-field class="form-field">
-        <mat-label>End Time</mat-label>
+        <mat-label>Horário de Finalização</mat-label>
         <input matInput formControlName="endTime" type="time" />
       </mat-form-field>
+
+      <!-- Mensagem de erro para intervalo de tempo inválido -->
       <div
         *ngIf="
           appointmentForm.errors && appointmentForm.errors['timeRangeInvalid']
         "
         class="error"
       >
-        End time must be after start time.
+        O horário de finalização deve ser depois do horário de início.
       </div>
     </div>
+
+    <!-- Ações do diálogo -->
     <div mat-dialog-actions align="end">
+      <!-- Botão para salvar ou editar compromisso -->
       <button type="submit" mat-flat-button (click)="onSaveClick()">
-        <span *ngIf="data.uuid">Edit Appointment</span>
-        <span *ngIf="!data.uuid">Add Appointment</span>
+        <span *ngIf="data.uuid">Editar Compromisso</span>
+        <span *ngIf="!data.uuid">Adicionar Compromisso</span>
       </button>
+
+      <!-- Botão para apagar compromisso, visível apenas ao editar -->
       <button
         (click)="onDeleteClick()"
         *ngIf="data.uuid"
         style="margin-left: 10px"
         mat-stroked-button
       >
-        Delete
+        Apagar
       </button>
+
+      <!-- Botão para cancelar a ação -->
       <button
         style="margin-left: 10px"
         mat-stroked-button
         (click)="onNoClick()"
       >
-        Cancel
+        Cancelar
       </button>
     </div>
   </div>

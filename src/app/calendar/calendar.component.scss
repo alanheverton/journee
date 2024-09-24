@@ -1,3 +1,46 @@
+.calendar-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  width: 100%;
+  height: var(--header-height);
+  padding: 10px 0;
+}
+
+.header-left {
+  display: flex;
+  align-items: center;
+}
+
+.logo {
+  display: inline-block;
+  width: 100px;
+  height: 100px;
+  margin-left: -130px;
+  margin-right: 70px; /* Ajuste a margem conforme necessário */
+  vertical-align: middle;
+}
+
+.date-container {
+  display: flex;
+  flex-direction: column;
+}
+
+.calendar-month {
+  font-weight: bold;
+  margin: 0;
+  span {
+    font-weight: 100;
+  }
+}
+
+.calendar-controls {
+  display: flex;
+  justify-content: flex-end;
+}
+
+
+
 :root {
   --header-height: 42px;
   --total-weeks: 6;

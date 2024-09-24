@@ -2,37 +2,37 @@
   <div class="calendar-container">
     <div class="calendar-header">
       <div>
-        <h2
-          class="calendar-month"
-          *ngIf="currentView === 'month' || currentView === 'week'"
-        >
-          {{ viewDate | date : "MMMM" }}
-          <span>{{ viewDate | date : "y" }}</span>
+        <!-- Exibe a data atual no cabeçalho, dependendo da visualização -->
+        <h2 class="calendar-month" *ngIf="currentView === 'month' || currentView === 'week'">
+          {{ viewDate | date : "dd/MM/yyyy" }}
         </h2>
         <h2 class="calendar-month" *ngIf="currentView === 'day'">
-          {{ viewDate | date : "d MMMM" }}
-          <span>{{ viewDate | date : "y" }}</span>
+          {{ viewDate | date : "dd/MM/yyyy" }}
         </h2>
         <span class="calendar-dayname" *ngIf="currentView === 'day'">
           {{ viewDate | date : "EEEE" }}
         </span>
       </div>
+      
+      <!-- Grupo de botões para alternar a visualização do calendário -->
       <mat-button-toggle-group
         class="calendar-view-toggle"
         name="currentView"
         (change)="switchToView($event.value)"
         aria-label="Calendar-View"
       >
-        <mat-button-toggle checked="{{ true }}" value="{{ CalendarView.Month }}"
-          >Month</mat-button-toggle
-        >
-        <mat-button-toggle value="{{ CalendarView.Week }}"
-          >Week</mat-button-toggle
-        >
-        <mat-button-toggle value="{{ CalendarView.Day }}"
-          >Day</mat-button-toggle
-        >
+        <mat-button-toggle checked="{{ true }}" value="{{ CalendarView.Month }}">
+          Mês
+        </mat-button-toggle>
+        <mat-button-toggle value="{{ CalendarView.Week }}">
+          Semana
+        </mat-button-toggle>
+        <mat-button-toggle value="{{ CalendarView.Day }}">
+          Dia
+        </mat-button-toggle>
       </mat-button-toggle-group>
+      
+      <!-- Controles de navegação do calendário -->
       <div class="calendar-controls">
         <button
           mat-icon-button
@@ -48,7 +48,7 @@
           (keydown.enter)="viewToday()"
           (keydown.space)="viewToday()"
         >
-          Today
+          Hoje
         </button>
         <button
           mat-icon-button
@@ -64,12 +64,12 @@
           (keydown.enter)="selectDate()"
           (keydown.space)="selectDate()"
         >
-          Add Appointment
+          Adicionar Compromisso
         </button>
       </div>
     </div>
 
-    <!-- Month @start -->
+    <!-- Visualização Mensal -->
     <table
       width="100%"
       cellspacing="0"
@@ -78,11 +78,9 @@
       *ngIf="currentView === 'month'"
     >
       <thead>
-        <tr>
-          <th *ngFor="let day of weekDays">
-            {{ day }}
-          </th>
-        </tr>
+        <th *ngFor="let day of weekDays; index as i">
+          {{ day }}
+        </th>
       </thead>
       <tbody cdkDropListGroup>
         <tr *ngFor="let week of weeks">
@@ -94,6 +92,7 @@
             [class.today]="isToday(date)"
             [ngStyle]="{ opacity: isCurrentMonth(date) ? '1' : '0.5' }"
           >
+            <!-- Sobreposição clicável para selecionar a data -->
             <div
               (click)="selectDate(date)"
               (keydown.enter)="selectDate(date)"
@@ -104,6 +103,7 @@
             <div class="date">
               {{ date.getDate() }}
             </div>
+            <!-- Lista de compromissos no dia -->
             <div class="appointments">
               <ng-container *ngFor="let appointment of appointments">
                 <div
@@ -126,9 +126,8 @@
         </tr>
       </tbody>
     </table>
-    <!-- Month @end -->
 
-    <!-- Week View -->
+    <!-- Visualização Semanal -->
     <table
       width="100%"
       cellspacing="0"
@@ -140,7 +139,7 @@
         <tr>
           <th></th>
           <th *ngFor="let day of weekDays; index as i">
-            {{ day }} {{ monthDays[i].getDate() }}
+            {{ day }} {{ monthDays[i] | date: "dd" }}
           </th>
         </tr>
       </thead>
@@ -155,6 +154,7 @@
             (cdkDropListDropped)="drop($event, monthDays[i], timeSlot)"
             [cdkDropListData]="appointments"
           >
+            <!-- Sobreposição clicável para selecionar o horário no dia -->
             <div
               (click)="selectDate(monthDays[i], timeSlot)"
               (keydown.enter)="selectDate(monthDays[i], timeSlot)"
@@ -162,6 +162,7 @@
               class="cell-overlay"
               tabindex="0"
             ></div>
+            <!-- Lista de compromissos no horário -->
             <div
               tabindex="0"
               *ngFor="
@@ -186,7 +187,7 @@
       </tbody>
     </table>
 
-    <!-- Day View -->
+    <!-- Visualização Diária -->
     <table
       width="100%"
       cellspacing="0"
@@ -204,6 +205,7 @@
             (cdkDropListDropped)="drop($event, monthDays[0], slot)"
             [cdkDropListData]="appointments"
           >
+            <!-- Sobreposição clicável para selecionar o horário do dia -->
             <div
               (click)="selectDate(monthDays[0], slot)"
               (keydown.enter)="selectDate(monthDays[0], slot)"
@@ -211,6 +213,7 @@
               class="cell-overlay"
               tabindex="0"
             ></div>
+            <!-- Lista de compromissos no horário -->
             <div
               tabindex="0"
               *ngFor="
