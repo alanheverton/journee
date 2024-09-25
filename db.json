@@ -1,0 +1,6 @@
+{
+    "appointments": [
+        { "id": 1, "title": "Reunião", "date": "2024-09-20" },
+        { "id": 2, "title": "Consulta Médica", "date": "2024-09-25" }
+    ]
+}
